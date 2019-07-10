@@ -1,7 +1,7 @@
 {
-  "name": "wow.kg",
+  "name": "wow-kg",
   "version": "1.0.0",
-  "description": "wow.kg",
+  "description": "interregional trading platform",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
