@@ -5,34 +5,46 @@ const db = mysql.createConnection({
   host : 'localhost',
   user : 'wow',
   password: 'mnbzTE9CSPtafjXy',
-  database: 'main_category_menu'
+  database: 'wow'
 });
   
-db.connect(function (err){
-  if(err) throw err;
-      db.query("SELECT * from gallery", function(err, result, fields){
-        if(err) throw err;
-        console.log(result);
-    });
+db.connect((err) => {
+  if(err){
+    throw err;
+  }
+  console.log('Mysql connected.');
 });
 
 const app = express();
 
-app.get('/createdb', (req, res)=> {
-  let sql = 'CREATE DATABASE wow.kg';
+app.get('/createdb', (req, res) => {
+  let sql = 'CREATE DATABASE wow';
   db.query(sql, (err, result) => {
     if(err) throw err;
     console.log(result);
-    res.send('Database created...');
+    res.send('Database created');
   });
 });
 
-app.post('/postdb', (req, res) => {
-  let sql = 'POST DATABASE main_category_menu';
-  db.query(sql, (err, result) => {
+app.get('/createpoststable', (req, res) => {
+  let sql = 'CREATE TABLE post(id int ATUO-INCREMENT, title VARCHAR(255), body VARCHAR(255), PIMARY KEY (id))';
+  db.query(sql, (err, result) =>{
     if(err) throw err;
-  })
-})
+    console.log(result);
+    res.send('post table created');
+  });
+});
+
+app.get('/addpost1', (req, res) => {
+  let post = {title:'Womens Clothes', body:'asdf asdff werer wewe vcsdf '};
+  let sql = 'INSERT INTO posts SET ?';
+  let query = db.query(sql, post, (err, result) =>{
+    if (err) throw err;
+    console.log(result);
+    res.send('Post 1 added...');
+  });
+});
+
 app.listen('3000', () => {
-  console.log('Server started on port 3000');
+    console.log('Server listening on port 3000');
 });
